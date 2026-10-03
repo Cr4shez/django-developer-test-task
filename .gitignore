@@ -52,7 +52,6 @@ coverage.xml
 cover/
 
 # Translations
-*.mo
 *.pot
 
 # Django stuff:
@@ -60,6 +59,8 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+/media/
+/staticfiles
 
 # Flask stuff:
 instance/
@@ -216,3 +217,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+#PyCharm
+.idea

@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: django_db
+      POSTGRES_USER: django_user
+      POSTGRES_PASSWORD: django_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U django_user -d django_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DATABASE_URL: postgres://django_user:django_password@db:5432/django_db
+      DEBUG: "True"
+      ALLOWED_HOSTS: "*"
+    ports:
+      - "8000:8000"
+
+  # Optional: Nginx for production-like setup
+  # nginx:
+  #   image: nginx:alpine
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - web
+  #   volumes:
+  #     - ./nginx:/etc/nginx/conf.d
+  #     - static_volume:/static
+  #     - media_volume:/media
+  #   ports:
+  #     - "80:80"
+
+volumes:
+  postgres_data:
+  static:
+  media:
