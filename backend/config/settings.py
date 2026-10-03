@@ -95,3 +95,20 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
+
+
+# Promo period (границы включительно, формат YYYY-MM-DD, задаются в .env)
+def _env_date(name: str) -> date:
+    raw = env.str(name)  # без default: если не задано — ImproperlyConfigured
+    try:
+        return date.fromisoformat(raw)
+    except ValueError as exc:
+        raise ImproperlyConfigured(
+            f"{name} должна быть датой в формате YYYY-MM-DD, получено: {raw!r}"
+        ) from exc
+
+
+PROMO_START_DATE = _env_date("PROMO_START_DATE")
+PROMO_END_DATE = _env_date("PROMO_END_DATE")
+if PROMO_START_DATE > PROMO_END_DATE:
+    raise ImproperlyConfigured("PROMO_START_DATE не может быть позже PROMO_END_DATE")
