@@ -120,7 +120,7 @@
 }
 
 .empty-img {
-    max-width: 320px;
+    max-width: 146px;
     width: 100%;
     height: auto;
     margin-bottom: 24px;
@@ -219,6 +219,6 @@
     }
 
     .empty-img {
-        max-width: 240px;
+        max-width: 146px;
     }
 }
