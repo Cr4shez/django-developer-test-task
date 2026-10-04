@@ -23,6 +23,10 @@ body {
     flex-direction: column;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* ── header ────────────────────────────────── */
 
 .header {
@@ -116,7 +120,7 @@ button.nav-link {
 .main {
     flex: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     padding: 40px 16px;
 }
@@ -299,7 +303,6 @@ button.nav-link {
 
     .main {
         padding: 0;
-        align-items: flex-start;
     }
 
     .card {

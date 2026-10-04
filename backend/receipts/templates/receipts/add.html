@@ -20,58 +20,43 @@
             <p class="card-subtitle">{% translate "Введите необходимые данные с чека" %}</p>
         </div>
 
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-        {% endfor %}
+        <div id="form-messages" aria-live="polite">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
 
-        {% if form.non_field_errors %}
-            <div class="alert alert-error">
-                {% for error in form.non_field_errors %}{{ error }}{% if not forloop.last %}<br>{% endif %}{% endfor %}
-            </div>
-        {% endif %}
-
-        <form method="post" novalidate class="receipt-form">
+        <form method="post" novalidate class="receipt-form" id="receipt-form">
             {% csrf_token %}
 
             {% for field in form %}
-                <div class="field{% if field.errors %} field--error{% endif %}">
+                <div class="field" id="field-{{ field.name }}">
                     <label class="field-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
                     <div class="form-input-wrap">
                         {{ field }}
                         {% if field.name == "amount" %}
                             <span class="form-input-suffix">₽</span>
                         {% endif %}
-                        {% if field.errors and field.field.required %}
-                            <img
-                                class="field-required"
-                                src="{% static 'core/img/icon-error-asterisk.svg' %}"
-                                width="8"
-                                height="8"
-                                alt=""
-                            >
-                        {% endif %}
                     </div>
-                    {% if field.errors %}
-                        <div class="field-error" role="alert">
+                    <div class="field-error hidden" role="alert">
+                        <img
+                            class="field-error-arrow"
+                            src="{% static 'core/img/icon-error-tooltip-arrow.svg' %}"
+                            width="17"
+                            height="17"
+                            alt=""
+                        >
+                        <div class="field-error-bubble">
                             <img
-                                class="field-error-arrow"
-                                src="{% static 'core/img/icon-error-tooltip-arrow.svg' %}"
-                                width="17"
-                                height="17"
+                                class="field-error-icon"
+                                src="{% static 'core/img/icon-danger.svg' %}"
+                                width="16"
+                                height="16"
                                 alt=""
                             >
-                            <div class="field-error-bubble">
-                                <img
-                                    class="field-error-icon"
-                                    src="{% static 'core/img/icon-danger.svg' %}"
-                                    width="16"
-                                    height="16"
-                                    alt=""
-                                >
-                                <span>{{ field.errors.0 }}</span>
-                            </div>
+                            <span></span>
                         </div>
-                    {% endif %}
+                    </div>
                 </div>
             {% endfor %}
 

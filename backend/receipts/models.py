@@ -39,9 +39,10 @@ def validate_purchase_date(value):
 
 class Receipt(models.Model):
     class Status(models.TextChoices):
-        PENDING = "pending", l_("На проверке")
-        ACCEPTED = "accepted", l_("Принят")
-        REJECTED = "rejected", l_("Отклонен")
+        PENDING = "pending", l_("В обработке")
+        WON = "won", l_("Вы выиграли")
+        PROCESSED = "processed", l_("Обработан")
+        REJECTED = "rejected", l_("Ошибка")
 
     fn = models.CharField(
         l_("ФН"),

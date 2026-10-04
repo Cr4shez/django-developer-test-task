@@ -1,0 +1,75 @@
+{% extends "core/base.html" %}
+{% load i18n static %}
+
+{% block title %}
+    {% translate "История чеков" %}
+{% endblock %}
+
+{% block header %}
+    {% include "core/_header.html" with list_active=True %}
+{% endblock header %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'receipts/css/list.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% if receipts %}
+        <section class="list-card">
+            <div class="list-card-intro">
+                <h1 class="list-card-title">{% translate "История чеков" %}</h1>
+            </div>
+
+            {# ── Table header ── #}
+            <div class="list-row list-row--header">
+                <span class="list-col list-col--date">{% translate "Дата покупки" %}</span>
+                <span class="list-col list-col--status">{% translate "Статус" %}</span>
+                <span class="list-col list-col--amount">{% translate "Сумма чека" %}</span>
+                <span class="list-col list-col--created">{% translate "Дата регистрации" %}</span>
+                <span class="list-col list-col--info">{% translate "Информация" %}</span>
+            </div>
+
+            {# ── Table body ── #}
+            {% for receipt in receipts %}
+                <div class="list-row">
+                    <span class="list-col list-col--date" data-label="{% translate 'Дата покупки' %}">
+                        {{ receipt.purchased_at|date:"d.m.Y" }}
+                    </span>
+                    <span class="list-col list-col--status" data-label="{% translate 'Статус' %}">
+                        <span class="status-badge status--{{ receipt.status }}">{{ receipt.get_status_display }}</span>
+                    </span>
+                    <span class="list-col list-col--amount" data-label="{% translate 'Сумма чека' %}">
+                        {{ receipt.amount|floatformat:"0" }} ₽
+                    </span>
+                    <span class="list-col list-col--created" data-label="{% translate 'Дата регистрации' %}">
+                        {{ receipt.created_at|date:"d.m.Y" }}
+                    </span>
+                    <span class="list-col list-col--info" data-label="{% translate 'Информация' %}">
+                        {% if receipt.status == "pending" %}
+                            {% translate "Чек в обработке" %}
+                        {% elif receipt.status == "won" %}
+                            {% translate "Поздравляем, ваш чек выиграл!" %}
+                        {% elif receipt.status == "rejected" %}
+                            {{ receipt.rejection_reason }}
+                        {% endif %}
+                    </span>
+                </div>
+            {% endfor %}
+        </section>
+    {% else %}
+        <section class="empty-card">
+            <img
+                class="empty-img"
+                src="{% static 'receipts/img/receipt_list_empty.png' %}"
+                width="320"
+                height="320"
+                alt=""
+            >
+            <div class="empty-text">
+                <p class="empty-title">{% translate "Здесь будет история ваших чеков" %}</p>
+                <p class="empty-subtitle">{% translate "Вы не добавили еще ни одного чека" %}</p>
+            </div>
+            <a class="btn-submit" href="{% url 'receipt_add' %}">{% translate "Зарегистрировать чек" %}</a>
+        </section>
+    {% endif %}
+{% endblock %}

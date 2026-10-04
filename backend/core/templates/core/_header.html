@@ -2,7 +2,6 @@
 
 <header class="header">
     <div class="header-start">
-        <div class="logo" aria-hidden="true"></div>
         {% block header_start %}
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
