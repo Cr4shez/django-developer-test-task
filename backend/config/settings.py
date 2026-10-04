@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "core",
+    "registration",
     "receipts",
 ]
 
@@ -95,6 +97,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Auth
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/login/"
 
 
 # Promo period (границы включительно, формат YYYY-MM-DD, задаются в .env)

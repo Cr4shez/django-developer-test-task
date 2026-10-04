@@ -10,15 +10,14 @@ from .forms import ReceiptForm
 from .models import DUPLICATE_RECEIPT_MESSAGE, Receipt
 
 
-class ReceiptCreateView(LoginRequiredMixin, CreateView):
+class ReceiptAddView(LoginRequiredMixin, CreateView):
     model = Receipt
     form_class = ReceiptForm
-    template_name = "receipts/receipt_form.html"
-    success_url = reverse_lazy("receipt_create")
+    template_name = "receipts/add.html"
+    success_url = reverse_lazy("receipt_add")
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        # Новый чек всегда попадает «на проверку», что бы ни пришло в запросе
         form.instance.status = Receipt.Status.PENDING
 
         try:

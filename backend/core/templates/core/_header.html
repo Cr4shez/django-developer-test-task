@@ -1,0 +1,27 @@
+{% load i18n static %}
+
+<header class="header">
+    <div class="header-start">
+        <div class="logo" aria-hidden="true"></div>
+        {% block header_start %}
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="nav-link" type="submit">{% translate "← Выйти" %}</button>
+            </form>
+        {% endblock header_start %}
+    </div>
+    <nav class="nav" aria-label="{% translate 'Навигация' %}">
+        {% block nav %}
+            <a class="nav-link {% if create_active %}active{% endif %}" href="{% url 'receipt_add' %}">{% translate "Зарегистрировать чек" %}</a>
+            <a class="nav-link {% if list_active %}active{% endif %}" href="{% url 'receipt_list' %}">{% translate "История чеков" %}</a>
+        {% endblock nav %}
+    </nav>
+    <div class="header-end">
+        {% block header_end %}
+            <div class="user-meta">
+                <p class="user-name">{% firstof user.get_full_name user.get_username %}</p>
+                {% if user.email %}<p class="user-email">{{ user.email }}</p>{% endif %}
+            </div>
+        {% endblock header_end %}
+    </div>
+</header>

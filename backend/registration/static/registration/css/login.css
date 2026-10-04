@@ -1,0 +1,19 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Mobile: < 768px */
+@media (max-width: 767px) {
+
+    .header-start,
+    .header-end {
+        display: none;
+    }
+
+    .nav {
+        flex: 1;
+        justify-content: center;
+    }
+}

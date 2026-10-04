@@ -1,0 +1,105 @@
+/* ── receipt-specific styles ───────────────── */
+
+.receipt-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-input--amount {
+    padding-right: 36px;
+}
+
+.form-input--amount.form-input--error {
+    padding-right: 72px;
+}
+
+.form-input-suffix {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.26;
+    color: #3e4552;
+    pointer-events: none;
+}
+
+.field--error .form-input-suffix {
+    right: 52px;
+}
+
+.field-clear {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+    border: 0;
+    border-radius: 40px;
+    background: #f0f3f7 url("/static/core/img/icon-clear.svg") center / 16px 16px no-repeat;
+    cursor: pointer;
+}
+
+.field-required {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 8px;
+    height: 8px;
+    pointer-events: none;
+}
+
+.field-error {
+    position: absolute;
+    left: 16px;
+    top: calc(100% - 2px);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    filter: drop-shadow(0 4px 3px #ebeff5);
+    pointer-events: none;
+}
+
+.field-error-arrow {
+    width: 16.59px;
+    height: 16.59px;
+    margin-bottom: -10px;
+    margin-left: 1px;
+}
+
+.field-error-bubble {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px 8px 10px;
+    background: #fff;
+    border: 1px solid #f04d4d;
+    border-radius: 8px;
+    color: #f04d4d;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.26;
+    white-space: nowrap;
+}
+
+.field-error-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.field--error {
+    margin-bottom: 36px;
+}
+
+@media (max-width: 720px) {
+    .field-error-bubble {
+        white-space: normal;
+        max-width: min(100%, 280px);
+    }
+}
