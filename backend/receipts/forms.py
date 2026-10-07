@@ -40,9 +40,7 @@ class ReceiptForm(forms.ModelForm):
             "amount": _("Сумма"),
         }
         widgets = {
-            "fn": forms.TextInput(
-                attrs={"inputmode": "numeric", "autocomplete": "off"}
-            ),
+            "fn": forms.TextInput(attrs={"inputmode": "numeric", "autocomplete": "off"}),
             "fd": forms.NumberInput(attrs={"min": 1, "autocomplete": "off"}),
             "fp": forms.TextInput(
                 attrs={"inputmode": "numeric", "autocomplete": "off"}
